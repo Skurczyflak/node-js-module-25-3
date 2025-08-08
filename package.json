@@ -1,0 +1,12 @@
+{
+  "name": "watermark_app_module_25_3",
+  "version": "1.0.0",
+  "description": "Watermark app ",
+  "main": "index.js",
+  "author": "Mateusz Matysek",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "6.5.0",
+    "jimp": "0.6.4"
+  }
+}
