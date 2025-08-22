@@ -3,6 +3,9 @@ const inquirer = require('inquirer');
 const { existsSync } = require('node:fs');
 
 const addTextWatermarkToImage = async function(inputFile, outputFile, text) {
+  if (!existsSync(inputFile)) {
+    throw new Error(`Input file ${inputFile} does not exist`);
+  }
   const image = await Jimp.read(inputFile);
   const font = await Jimp.loadFont(Jimp.FONT_SANS_32_BLACK);
   const textData = {
@@ -14,6 +17,9 @@ const addTextWatermarkToImage = async function(inputFile, outputFile, text) {
   await image.quality(100).writeAsync(outputFile);
 };
 const addImageWatermarkToImage = async function(inputFile, outputFile, watermarkFile) {
+  if (!existsSync(inputFile)) {
+    throw new Error(`Input file ${inputFile} does not exist`);
+  }
   const image = await Jimp.read(inputFile);
   const watermark = await Jimp.read(watermarkFile);
   const x = image.getWidth() / 2 - watermark.getWidth() / 2;
@@ -105,7 +111,7 @@ const startApp = async () => {
    options.watermarkText = text.value;
     if (existsSync(`./img/edited-${options.inputImage}`)){
         try{
-        addTextWatermarkToImage('./img/edited-' + options.inputImage, './test-with-watermark.jpg', options.watermarkText);
+        await addTextWatermarkToImage('./img/edited-' + options.inputImage, './test-with-watermark.jpg', options.watermarkText);
         }
         catch(error){
             console.log("Something went wrong... Try again!")
